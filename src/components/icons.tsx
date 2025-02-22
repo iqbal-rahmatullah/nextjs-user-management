@@ -1,0 +1,47 @@
+export * as Icons from "./icons";
+
+export type IconProps = React.SVGProps<SVGSVGElement> & { size?: number };
+
+export {
+    Package2,
+    Bell,
+    Home,
+    ShoppingCart,
+    Package,
+    Users,
+    LineChart,
+    Moon,
+    Sun,
+    UserCircle,
+    Menu,
+    Search,
+    Settings,
+    LogOut as ExitIcon,
+    Loader2,
+    ChevronLeft,
+    ChevronDown,
+    ChevronRight,
+    User,
+    Wrench,
+    BellIcon,
+    Palette,
+    Loader,
+    AudioWaveform,
+    File,
+    FileImage,
+    FolderArchive,
+    UploadCloud,
+    Video,
+    X,
+    Mail,
+    Trash,
+    AlertCircle,
+    AlertTriangle,
+    ShieldAlert,
+    Square,
+    SquareCheck,
+    SquareMinus,
+    Star,
+} from 'lucide-react'
+
+export { GitHubLogoIcon as Github } from "@radix-ui/react-icons"
