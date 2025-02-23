@@ -11,30 +11,31 @@ export async function getUserAddress(input: GetUserAddressSchema) {
   noStore()
 
   try {
-    const { page, per_page, first_name } = input
+    const { page, per_page, firstName } = input
 
     const offset = (page - 1) * per_page
 
     const { data, total } = await db.transaction(async (tx) => {
-      const data = (await tx
+      const rawData = await tx
         .select()
         .from(user)
-        .where(
-          first_name ? ilike(user.firstName, `%${first_name}%`) : undefined
-        )
+        .where(firstName ? ilike(user.firstName, `%${firstName}%`) : undefined)
         .limit(per_page)
         .offset(offset)
         .leftJoin(address, eq(user.id, address.userId))
-        .orderBy(desc(user.createdAt))) as unknown as UserDataType[]
+        .orderBy(desc(user.createdAt))
+
+      const data = rawData.map((row) => ({
+        ...row.users,
+        address: row.address,
+      })) as unknown as UserDataType[]
 
       const total = await tx
         .select({
           count: count(),
         })
         .from(user)
-        .where(
-          first_name ? ilike(user.firstName, `%${first_name}%`) : undefined
-        )
+        .where(firstName ? ilike(user.firstName, `%${firstName}%`) : undefined)
         .execute()
         .then((res) => res[0].count ?? 0)
 

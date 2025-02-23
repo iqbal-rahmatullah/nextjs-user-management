@@ -57,7 +57,7 @@ export function getColumns(): ColumnDef<User>[] {
       accessorKey: "id",
       header: ({ column }) => <p>UID</p>,
       cell: ({ row }) => {
-        const id = row.original.users.id as string
+        const id = row.original.id as string
 
         if (!id) return "System"
         return (
@@ -80,7 +80,7 @@ export function getColumns(): ColumnDef<User>[] {
       ),
       cell: ({ row }) => (
         <div className='w-20'>
-          {row.original.users.firstName} {row.original.users.lastName}
+          {row.original.firstName} {row.original.lastName}
         </div>
       ),
     },
@@ -93,7 +93,7 @@ export function getColumns(): ColumnDef<User>[] {
         return (
           <div className='flex space-x-2'>
             <span className='max-w-[31.25rem] truncate font-medium'>
-              {row.original.users.birthDate}
+              {row.original.birthDate}
             </span>
           </div>
         )
@@ -120,7 +120,7 @@ export function getColumns(): ColumnDef<User>[] {
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title='Created At' />
       ),
-      cell: ({ row }) => formatDate(row.original.users.createdAt as Date),
+      cell: ({ row }) => formatDate(row.original.createdAt as Date),
     },
   ]
 }
