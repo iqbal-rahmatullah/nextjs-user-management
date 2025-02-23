@@ -8,8 +8,8 @@ export const user = pgTable("users", {
   firstName: varchar("firstname").notNull(),
   lastName: varchar("lastname"),
   birthDate: date("birth_date").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at"),
 })
 
 export const UserSchema = createInsertSchema(user)
