@@ -1,6 +1,9 @@
-import { User } from "@/types/model/user"
-import { Row } from "@tanstack/react-table"
+import { type Row } from "@tanstack/react-table"
 import { toast } from "sonner"
+
+import { getErrorMessage } from "@/lib/handle-error"
+import { deleteUser } from "./actions"
+import { User } from "@/drizzle/schema"
 
 export function deleteUsers({
   rows,
@@ -9,18 +12,21 @@ export function deleteUsers({
   rows: Row<User>[]
   onSuccess?: () => void
 }) {
-  toast.promise(deleteUsersAction(rows.map((row) => row.original.id)), {
-    loading: "Deleting...",
-    success: (res) => {
-      onSuccess?.()
-      const err = res.data?.error
-      if (err) {
-        return getErrorMessage(err)
-      }
-      const count = res.data?.data?.length
-
-      return `${count === 1 ? "user" : count + " users"} deleted`
-    },
-    error: (err) => getErrorMessage(err),
-  })
+  toast.promise(
+    Promise.all(
+      rows.map(async (row) =>
+        deleteUser({
+          id: row.original.id,
+        })
+      )
+    ),
+    {
+      loading: "Deleting...",
+      success: () => {
+        onSuccess?.()
+        return "User deleted"
+      },
+      error: (err) => getErrorMessage(err),
+    }
+  )
 }

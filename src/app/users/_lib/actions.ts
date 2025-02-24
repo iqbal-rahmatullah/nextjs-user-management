@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { address, NewAddress, NewUser, user } from "@/drizzle/schema"
 import { db } from "@/drizzle/db"
+import { eq } from "drizzle-orm"
 
 export async function createUser(input: CreateUser) {
   noStore()
@@ -42,6 +43,19 @@ export async function createUser(input: CreateUser) {
     return {
       data: null,
       error: getErrorMessage(error),
+    }
+  }
+}
+
+export async function deleteUser(input: { id: string }) {
+  try {
+    await db.delete(user).where(eq(user.id, input.id))
+
+    revalidatePath("/users")
+  } catch (err) {
+    return {
+      data: null,
+      error: getErrorMessage(err),
     }
   }
 }

@@ -15,9 +15,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-
 import { deleteUsers } from "../_lib/mutations"
-import { User } from "@/types/model/user"
+import { User } from "@/drizzle/schema"
 
 interface DeleteUserDialogProps
   extends React.ComponentPropsWithoutRef<typeof Dialog> {
@@ -26,7 +25,7 @@ interface DeleteUserDialogProps
   showTrigger?: boolean
 }
 
-export function DeleteUsersDialog({
+export function DeleteUserDialog({
   users,
   onSuccess,
   showTrigger = true,
@@ -40,7 +39,7 @@ export function DeleteUsersDialog({
         <DialogTrigger asChild>
           <Button variant='outline' size='sm'>
             <TrashIcon className='mr-2 size-4' aria-hidden='true' />
-            Delete ({users.length})
+            Delete
           </Button>
         </DialogTrigger>
       ) : null}
@@ -48,9 +47,8 @@ export function DeleteUsersDialog({
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your{" "}
-            <span className='font-medium'>{users.length}</span>
-            {users.length === 1 ? "user" : " users"} from our servers.
+            This action cannot be undone. This will permanently delete your user
+            from our servers.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className='gap-2 sm:space-x-0'>

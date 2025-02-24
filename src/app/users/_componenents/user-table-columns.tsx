@@ -11,7 +11,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
@@ -24,7 +23,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@radix-ui/react-tooltip"
-import { toast } from "sonner"
+import { DeleteUserDialog } from "./delete_user_dialog"
 // import { UpdateTaskSheet } from "./update-task-sheet"
 
 export function getColumns(): ColumnDef<User>[] {
@@ -121,6 +120,54 @@ export function getColumns(): ColumnDef<User>[] {
         <DataTableColumnHeader column={column} title='Created At' />
       ),
       cell: ({ row }) => formatDate(row.original.createdAt as Date),
+    },
+    {
+      id: "actions",
+      cell: function Cell({ row }) {
+        const [isUpdatePending, startUpdateTransition] = React.useTransition()
+        const [showUpdateTaskSheet, setShowUpdateTaskSheet] =
+          React.useState(false)
+        const [showDeleteTaskDialog, setShowDeleteTaskDialog] =
+          React.useState(false)
+
+        return (
+          <>
+            {/* <UpdateTaskSheet
+              open={showUpdateTaskSheet}
+              onOpenChange={setShowUpdateTaskSheet}
+              task={row.original}
+            /> */}
+            <DeleteUserDialog
+              open={showDeleteTaskDialog}
+              onOpenChange={setShowDeleteTaskDialog}
+              users={[row]}
+              showTrigger={false}
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  aria-label='Open menu'
+                  variant='ghost'
+                  className='flex size-8 p-0 data-[state=open]:bg-muted'
+                >
+                  <DotsHorizontalIcon className='size-4' aria-hidden='true' />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end' className='w-40'>
+                {/* <DropdownMenuItem onSelect={() => setShowUpdateTaskSheet(true)}>
+                  Edit
+                </DropdownMenuItem> */}
+                <DropdownMenuItem
+                  onSelect={() => setShowDeleteTaskDialog(true)}
+                >
+                  Delete
+                  <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        )
+      },
     },
   ]
 }
