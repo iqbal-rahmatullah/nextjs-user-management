@@ -4,6 +4,7 @@ import { type Table } from "@tanstack/react-table"
 // import { DeleteUsersDialog } from "./delete-users-dialog"
 import { User } from "@/types/model/user"
 import { CreateUserDialog } from "./create-user-dialog"
+import { DeleteUserDialog } from "./delete_user_dialog"
 
 interface UsersTableToolbarActionsProps {
   table: Table<User>
@@ -14,12 +15,12 @@ export function UsersTableToolbarActions({
 }: UsersTableToolbarActionsProps) {
   return (
     <div className='flex items-center gap-2'>
-      {/* {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-        <DeleteUsersDialog
+      {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+        <DeleteUserDialog
           users={table.getFilteredSelectedRowModel().rows}
           onSuccess={() => table.toggleAllPageRowsSelected(false)}
         />
-      ) : null} */}
+      ) : null}
       <CreateUserDialog />
       {/**
        * Other actions can be added here.

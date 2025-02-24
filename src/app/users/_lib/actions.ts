@@ -7,7 +7,6 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { address, NewAddress, NewUser, user } from "@/drizzle/schema"
 import { db } from "@/drizzle/db"
 import { eq } from "drizzle-orm"
-import { User } from "@/types/model/user"
 
 export async function createUser(input: CreateUser) {
   noStore()
