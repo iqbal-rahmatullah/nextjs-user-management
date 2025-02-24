@@ -9,3 +9,15 @@ export const searchParamsSchema = z.object({
 export const getUserAddressSchema = searchParamsSchema
 
 export type GetUserAddressSchema = z.infer<typeof getUserAddressSchema>
+
+export const createUserSchema = z.object({
+  firstName: z.string().min(3).max(50),
+  lastName: z.string().min(3).max(50),
+  birthDate: z.date(),
+  street: z.string().min(3).max(50),
+  city: z.string().min(3).max(50),
+  province: z.string().min(3).max(50),
+  postalCode: z.string().min(3).max(50),
+})
+
+export type CreateUser = z.infer<typeof createUserSchema>

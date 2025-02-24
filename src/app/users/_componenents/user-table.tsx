@@ -42,7 +42,7 @@ export function UsersTable({ usersPromise }: UserTableProps) {
   return (
     <div className='w-full space-y-2.5 overflow-auto'>
       <DataTableToolbar table={table} filterFields={filterFields}>
-        {/* <UsersTableToolbarActions table={table} /> */}
+        <UsersTableToolbarActions table={table} />
       </DataTableToolbar>
       <DataTable
         table={table}
