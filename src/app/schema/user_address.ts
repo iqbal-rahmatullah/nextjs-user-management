@@ -21,3 +21,16 @@ export const createUserSchema = z.object({
 })
 
 export type CreateUser = z.infer<typeof createUserSchema>
+
+export const updateUserSchema = z.object({
+  id: z.string(),
+  firstName: z.string().min(3).max(50),
+  lastName: z.string().min(3).max(50),
+  birthDate: z.date(),
+  street: z.string().min(3).max(50),
+  city: z.string().min(3).max(50),
+  province: z.string().min(3).max(50),
+  postalCode: z.string().min(3).max(50),
+})
+
+export type UpdateUserSchema = z.infer<typeof updateUserSchema>

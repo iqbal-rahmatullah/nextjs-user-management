@@ -24,6 +24,7 @@ import {
   TooltipTrigger,
 } from "@radix-ui/react-tooltip"
 import { DeleteUserDialog } from "./delete_user_dialog"
+import { UpdateUserSheet } from "./update-user-sheet"
 // import { UpdateTaskSheet } from "./update-task-sheet"
 
 export function getColumns(): ColumnDef<User>[] {
@@ -124,7 +125,6 @@ export function getColumns(): ColumnDef<User>[] {
     {
       id: "actions",
       cell: function Cell({ row }) {
-        const [isUpdatePending, startUpdateTransition] = React.useTransition()
         const [showUpdateTaskSheet, setShowUpdateTaskSheet] =
           React.useState(false)
         const [showDeleteTaskDialog, setShowDeleteTaskDialog] =
@@ -132,11 +132,11 @@ export function getColumns(): ColumnDef<User>[] {
 
         return (
           <>
-            {/* <UpdateTaskSheet
+            <UpdateUserSheet
               open={showUpdateTaskSheet}
               onOpenChange={setShowUpdateTaskSheet}
-              task={row.original}
-            /> */}
+              user={row.original}
+            />
             <DeleteUserDialog
               open={showDeleteTaskDialog}
               onOpenChange={setShowDeleteTaskDialog}
@@ -154,9 +154,9 @@ export function getColumns(): ColumnDef<User>[] {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align='end' className='w-40'>
-                {/* <DropdownMenuItem onSelect={() => setShowUpdateTaskSheet(true)}>
+                <DropdownMenuItem onSelect={() => setShowUpdateTaskSheet(true)}>
                   Edit
-                </DropdownMenuItem> */}
+                </DropdownMenuItem>
                 <DropdownMenuItem
                   onSelect={() => setShowDeleteTaskDialog(true)}
                 >

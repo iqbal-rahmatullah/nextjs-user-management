@@ -1,12 +1,13 @@
 "use server"
 
-import { CreateUser } from "@/app/schema/user_address"
+import { CreateUser, UpdateUserSchema } from "@/app/schema/user_address"
 import { getErrorMessage } from "@/lib/handle-error"
 import { v4 as uuidv4 } from "uuid"
 import { unstable_noStore as noStore, revalidatePath } from "next/cache"
 import { address, NewAddress, NewUser, user } from "@/drizzle/schema"
 import { db } from "@/drizzle/db"
 import { eq } from "drizzle-orm"
+import { User } from "@/types/model/user"
 
 export async function createUser(input: CreateUser) {
   noStore()
@@ -56,6 +57,46 @@ export async function deleteUser(input: { id: string }) {
     return {
       data: null,
       error: getErrorMessage(err),
+    }
+  }
+}
+
+export async function updateUser(input: UpdateUserSchema) {
+  noStore()
+  try {
+    const dataUser: NewUser = {
+      firstName: input.firstName,
+      lastName: input.lastName,
+      birthDate: new Date(input.birthDate).toISOString(),
+    }
+
+    const dataAddress: NewAddress = {
+      street: input.street,
+      city: input.city,
+      postalCode: input.postalCode,
+      province: input.province,
+      userId: input.id,
+    }
+
+    await Promise.all([
+      db.update(user).set(dataUser).where(eq(user.id, input.id)).execute(),
+      db
+        .update(address)
+        .set(dataAddress)
+        .where(eq(address.userId, input.id))
+        .execute(),
+    ])
+
+    revalidatePath("/users")
+
+    return {
+      data: null,
+      error: null,
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error: getErrorMessage(error),
     }
   }
 }

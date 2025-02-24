@@ -3,6 +3,7 @@ import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "@/lib/utils"
+import { Icons } from "../icons"
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -54,4 +55,27 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 )
 Button.displayName = "Button"
 
-export { Button, buttonVariants }
+interface LoadingButtonProps extends ButtonProps {
+  children: React.ReactNode
+  isPending?: boolean
+  className?: string
+  type?: ButtonProps["type"]
+}
+
+const LoadingButton = ({
+  isPending,
+  children,
+  type,
+  className,
+  disabled,
+  ...props
+}: LoadingButtonProps) => {
+  return (
+    <Button type={type} {...props} disabled={isPending} className={className}>
+      {isPending && <Icons.Loader className='mr-2 h-4 w-4 animate-spin' />}
+      {children}
+    </Button>
+  )
+}
+
+export { Button, buttonVariants, LoadingButton }
