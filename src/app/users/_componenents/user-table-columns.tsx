@@ -55,7 +55,7 @@ export function getColumns(): ColumnDef<User>[] {
     },
     {
       accessorKey: "id",
-      header: ({ column }) => <p>UID</p>,
+      header: () => <p>UID</p>,
       cell: ({ row }) => {
         const id = row.original.id as string
 

@@ -67,7 +67,6 @@ const LoadingButton = ({
   children,
   type,
   className,
-  disabled,
   ...props
 }: LoadingButtonProps) => {
   return (

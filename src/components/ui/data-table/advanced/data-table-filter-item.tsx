@@ -118,18 +118,18 @@ export function DataTableFilterItem<TData>({
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          size="sm"
+          variant='outline'
+          size='sm'
           className={cn(
             "h-7 gap-0 truncate rounded-full",
             (selectedValues.size > 0 || value.length > 0) && "bg-muted/50"
           )}
         >
-          <span className="font-medium capitalize">{selectedOption.label}</span>
+          <span className='font-medium capitalize'>{selectedOption.label}</span>
           {selectedOption.options.length > 0
             ? selectedValues.size > 0 && (
-                <span className="text-muted-foreground">
-                  <span className="text-foreground">: </span>
+                <span className='text-muted-foreground'>
+                  <span className='text-foreground'>: </span>
                   {selectedValues.size > 2
                     ? `${selectedValues.size} selected`
                     : selectedOption.options
@@ -139,17 +139,17 @@ export function DataTableFilterItem<TData>({
                 </span>
               )
             : value.length > 0 && (
-                <span className="text-muted-foreground">
-                  <span className="text-foreground">: </span>
+                <span className='text-muted-foreground'>
+                  <span className='text-foreground'>: </span>
                   {value}
                 </span>
               )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-60 space-y-1.5 p-2" align="start">
-        <div className="flex items-center space-x-1 pl-1 pr-0.5">
-          <div className="flex flex-1 items-center space-x-1">
-            <div className="text-xs capitalize text-muted-foreground">
+      <PopoverContent className='w-60 space-y-1.5 p-2' align='start'>
+        <div className='flex items-center space-x-1 pl-1 pr-0.5'>
+          <div className='flex flex-1 items-center space-x-1'>
+            <div className='text-xs capitalize text-muted-foreground'>
               {selectedOption.label}
             </div>
             <Select
@@ -158,7 +158,7 @@ export function DataTableFilterItem<TData>({
                 setSelectedOperator(operators.find((c) => c.value === value))
               }
             >
-              <SelectTrigger className="h-auto w-fit truncate border-none px-2 py-0.5 text-xs hover:bg-muted/50">
+              <SelectTrigger className='h-auto w-fit truncate border-none px-2 py-0.5 text-xs hover:bg-muted/50'>
                 <SelectValue placeholder={selectedOperator?.label} />
               </SelectTrigger>
               <SelectContent>
@@ -167,7 +167,7 @@ export function DataTableFilterItem<TData>({
                     <SelectItem
                       key={item.value}
                       value={item.value}
-                      className="py-1"
+                      className='py-1'
                     >
                       {item.label}
                     </SelectItem>
@@ -177,10 +177,10 @@ export function DataTableFilterItem<TData>({
             </Select>
           </div>
           <Button
-            aria-label="Remove filter"
-            variant="ghost"
-            size="icon"
-            className="size-7 text-muted-foreground"
+            aria-label='Remove filter'
+            variant='ghost'
+            size='icon'
+            className='size-7 text-muted-foreground'
             onClick={() => {
               setSelectedOptions((prev) =>
                 prev.filter((item) => item.value !== selectedOption.value)
@@ -192,7 +192,7 @@ export function DataTableFilterItem<TData>({
               router.push(`${pathname}?${newSearchParams}` as any)
             }}
           >
-            <TrashIcon className="size-4" aria-hidden="true" />
+            <TrashIcon className='size-4' aria-hidden='true' />
           </Button>
         </div>
         {selectedOption.options.length > 0 ? (
@@ -208,8 +208,8 @@ export function DataTableFilterItem<TData>({
           )
         ) : (
           <Input
-            placeholder="Type here..."
-            className="h-8"
+            placeholder='Type here...'
+            className='h-8'
             value={value}
             onChange={(event) => setValue(event.target.value)}
             autoFocus

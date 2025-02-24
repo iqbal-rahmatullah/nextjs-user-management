@@ -1,0 +1,39 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres
+    container_name: db_user_management
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: db_user_management
+    ports:
+      - ":5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: app_user_management
+    restart: always
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://root:password@db:5432/db_user_management
+      NEXT_PUBLIC_APP_URL: http://localhost:3000
+    ports:
+      - "3000:3000"
+
+  adminer:
+    image: adminer
+    container_name: adminer_user_management
+    restart: always
+    ports:
+      - "8082:8080"
+
+volumes:
+  pgdata:
